@@ -29,5 +29,5 @@ def drawing():
             pygame.display.flip()
             clock.tick(60)
 
-if __name__ == "__drawing++":
+if __name__ == "__drawing__":
     drawing()
