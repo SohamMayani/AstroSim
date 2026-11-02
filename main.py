@@ -3,6 +3,7 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from samplingTestShapes import DrawCube
+from geometry import fibonacciSphere, drawPoly, icosahedron
 
 def main():
     pygame.init()
@@ -27,12 +28,12 @@ def main():
                 quit()
 
         # Rotate the cube by 1 degree around the (X=1, Y=1, Z=1) axis vector per frame
-        glRotatef(3, 0, 1, 3)
+        glRotatef(1, 1, 1, 1)
         
         # Clear the screen's color buffer and depth buffer before drawing the new frame
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         
-        DrawCube()
+        drawPoly(icosahedron(0.0, 0.0, 0.0, 1))
         
         pygame.display.flip()
         clock.tick(60) # Limit the simulation to 60 FPS

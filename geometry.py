@@ -29,23 +29,55 @@ def planeCreator(centerX, centerY, centerZ, normVector):
     else:
         return 0
 
-# Fibonacci sphere, returning a matrix with first row = center coordinates
-def fibonacchiSphere(numPoints, centerX, centerY, centerZ):
-    tempPoints = [centerX, centerY, centerZ]
+# Fibonacci sphere, returning a matrix with first row = center coordinates --> Idea by Theo
+def fibonacciSphere(numPoints, centerX, centerY, centerZ, scale):
+    coordPoints = [[centerX, centerY, centerZ]]
     phi = math.pi*(3 - math.sqrt(5))
+
     for i in range(numPoints):
-        pointZ = 1 - ((2*i)/(numPoints-1))
+        pointZ = 1 - ((2 * i) / (numPoints - 1))
         radius = math.sqrt(1 - (pointZ ** 2))
         rotationAngle = i * phi
-        pointX = radius*math.cos(rotationAngle)
-        pointY = radius*math.sin(rotationAngle)
-        tempPoints.append[pointZ, pointX, pointY]
+        pointX = radius * math.cos(rotationAngle)
+        pointY = radius * math.sin(rotationAngle)
 
-    for j in (len(tempPoints))/3:
-        pointsCoords = numpy.array[tempPoints[(3*j)],tempPoints[(3*j) + 1],tempPoints[(3*j) + 2]]
-        tempPoints = numpy.block([[tempPoints], [pointsCoords]])
+        tempX = centerX + (scale * pointX)
+        tempY = centerY + (scale * pointY)
+        tempZ = centerZ + (scale * pointZ)
+        coordPoints.append([tempX, tempY, tempZ])
 
-    return tempPoints
+    return numpy.array(coordPoints, dtype=numpy.float32)
+
+# Matrix coordinates to drawing OpenGL lines
+def drawPoly(matrix):
+    if numpy.shape(matrix)[0] > 1:
+        center = numpy.array(matrix[0])
+        glBegin(GL_LINES)
+
+        for i in range(-1 + numpy.shape(matrix)[0]):
+            glVertex3fv(matrix[i + 1])
+
+        glEnd()
+
+# Base Icosahedron Generator
+def icosahedron(centerX, centerY, centerZ, scale):
+    allPoints = [[centerX, centerY, centerZ]]
+    phi = (1 + math.sqrt(5)) / 2
+    negative = [[1, 1, 1], [-1, 1, 1], [1, -1, 1], [1, 1, -1], [-1, -1, 1], [-1, 1, -1], [1, -1, -1], [-1, -1, -1]]
+    point = [0, 1, phi]
+    for i in range(3):
+        for j in range(8):
+            pointX = scale * point[i % 3] * negative[j][0]
+            pointY = scale * point[(i + 1) % 3] * negative[j][1]
+            pointZ = scale * point[(i + 2) % 3] * negative[j][2]
+            allPoints.append([centerX + pointX, centerY + pointY, centerZ + pointZ])
+
+    coordPoints = []
+    for i in allPoints:
+        if i not in coordPoints:
+            coordPoints.append(i)
+
+    return numpy.array(coordPoints, dtype=numpy.float32)
 
 
 # Cross product for 3D vectors
