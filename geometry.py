@@ -72,26 +72,28 @@ def icosahedron(centerX, centerY, centerZ, scale):
             pointZ = scale * point[(i + 2) % 3] * negative[j][2]
             allPoints.append([centerX + pointX, centerY + pointY, centerZ + pointZ])
 
-    coordPoints = []
-    for i in allPoints:
-        if i not in coordPoints:
-            coordPoints.append(i)
-
+    coordPoints = removeDuplicateArray(allPoints)
     return numpy.array(coordPoints, dtype=numpy.float32)
 
+# Removal of repeated array elements
+def removeDuplicateArray(array):
+    relist = [array[0]]
+    for i in array:
+        if i not in relist:
+            relist.append(i)
+    return numpy.array(relist)
 
-# Cross product for 3D vectors
-def crossProduct(v1, v2):
-    if (len(v1) == len(v2)):
-        c1 = v1[1]*v2[2] - v2[1]*v1[2]
-        c2 = v1[2]*v2[0] - v2[2]*v1[0]
-        c3 = v1[0]*v2[1] - v2[0]*v1[1]
-        crossProduct = numpy.array[c1, c2, c3]
-        return crossProduct
+# Removal of of overlapping line coordinates (a->b and b->a contribute the same line)
+def removeDuplicateLine(matrix):
+    if numpy.shape(matrix)[1] == 2:
+        relist = [matrix[0]]
+        for i in matrix:
+            for j in matrix:
+                if i != [j[1], j[0]]:
+                    relist.append(i)
+        return removeDuplicateArray(relist)
     else:
-        return 0
-
-
+        return -1
 
 # Dot product for nD vectors
 def dotProduct(v1, v2):
@@ -104,3 +106,37 @@ def dotProduct(v1, v2):
         return dotProduct
     else:
         return 0
+
+# Ordering pairs of coordinates using dot products (inputs 2d matrix)
+def orderedCoords(matrix):
+    if len(numpy.shape(matrix)) == 2:
+        dotProdlist = []
+        pointsList = [[]]
+        for v1 in matrix:
+            for v2 in matrix:
+                if (v1 != v2):
+                    dotProdlist.append(dotProduct(v1, v2))
+                    pointsList.append([v1, v2])
+
+        maxDotProd = numpy.max(dotProdlist)
+        neighborPoints = [[]]
+
+        for index1 in range(len(dotProdlist)):
+            if dotProdlist[index1] is maxDotProd:
+                neighborPoints.append(pointsList[index1])
+
+        return removeDuplicateLine(neighborPoints)
+    else:
+        return -1
+
+# Cross product for 3D vectors
+def crossProduct(v1, v2):
+    if (len(v1) == len(v2)):
+        c1 = v1[1]*v2[2] - v2[1]*v1[2]
+        c2 = v1[2]*v2[0] - v2[2]*v1[0]
+        c3 = v1[0]*v2[1] - v2[0]*v1[1]
+        crossProduct = numpy.array[c1, c2, c3]
+        return crossProduct
+    else:
+        return 0
+
