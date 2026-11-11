@@ -3,7 +3,7 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from samplingTestShapes import DrawCube
-from geometry import fibonacciSphere, drawPoly, icosahedron
+from geometry import drawPoly, icosahedron
 
 def main():
     pygame.init()
