@@ -46,7 +46,13 @@ class Shape:
             dist += (vertex1[i] - vertex2[i]) ** 2
         return math.sqrt(dist)
 
-    # Properties (getters)
+    # Mutators
+    def set_size(self, size):
+        for vertex in self._vertices:
+            for dimension in vertex:
+                dimension *= size
+
+    # Properties (accessors)
     @property
     def name(self):
         return self._name

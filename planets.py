@@ -1,4 +1,4 @@
-#importing libraries
+# Importing Libraries
 import pygame
 from pygame.locals import *
 from OpenGL.GL import *
@@ -6,7 +6,7 @@ from OpenGL.GLU import *
 import numpy as np
 import math
 
-#importing from files
+# Importing from files
 from shapes import *
 
 class AstronomicalObject:
@@ -15,17 +15,36 @@ class AstronomicalObject:
         self._type = type
         self._center = [center[0], center[1], center[2]]
         self._size = size
-        self._shape = shape
+        self.create_shape(shape)
         self._momentum = momentum
 
-    # Methods
-    def draw():
+    # Instance Methods
+    # Draw Astronomical Object
+    def draw(self):
         glBegin(GL_LINES)
-        
-        glVertex3fv(0, 0)
-        glVertex3fv(1, 1)
-        
+        for i in range(0, len(self._shape.edges)):
+            glVertex3fv(self.addVector(self._shape.edges[i], self._center))
         glEnd()
+
+    # Define the coordinates for the Astronomical Object
+    def create_shape(self, shape):
+        if (shape == "cube"):
+            self._shape = Cube()
+        elif (shape == "icosahedron"):
+            self._shape = Icosahedron()
+        self._shape.set_size(self._size)
+
+    # Static Methods
+    # Vector Addition
+    @staticmethod
+    def addVector(v1, v2):
+        if (len(v1) != len(v2)):
+            raise ValueError(f"Cannot add vectors of different lengths:\n{v1} and {v2}")
+        v0 = []
+        for i in range(0, len(v1)):
+            v0.append(v1[i] + v2[i])
+        return v0
+
 
 class Star(AstronomicalObject):
     # Construction
@@ -33,8 +52,8 @@ class Star(AstronomicalObject):
         if (not isinstance(name, str)):
             raise NotImplementedError("Creating a star requires a name")
         self._name = name
-        if ((len(center) != 3) or (not (isinstance(size, float)) or (isinstance(size, int))) or (not isinstance(shape, str)) or (len(momentum) != 3)):
-            raise ValueError(f"Incorrect inputs were received when trying to create the star {self._name}")
+        # if ((len(center) != 3) or (not (isinstance(size, float)) or (isinstance(size, int))) or (not isinstance(shape, str)) or (len(momentum) != 3)):
+        #     raise ValueError(f"Incorrect inputs were received when trying to create the star {self._name}")
         super().__init__("star", center, size, shape, momentum)
 
     # Properties (getters)
@@ -111,5 +130,5 @@ class Planet:
                 x = shape[i][0] + self.__center[0]
                 y = shape[i][1] + self.__center[1]
                 z = shape[i][2] + self.__center[2]
-                glVertex3fc([x, y, z])
+                glVertex3fv([x, y, z])
 
