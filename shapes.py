@@ -48,9 +48,9 @@ class Shape:
 
     # Mutators
     def set_size(self, size):
-        for vertex in self._vertices:
-            for dimension in vertex:
-                dimension *= size
+        for vertex in range(0, len(self._vertices)):
+            for dimension in range(0, len(self._vertices[vertex])):
+                self._vertices[vertex][dimension] *= size
 
     # Properties (accessors)
     @property

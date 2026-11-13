@@ -34,6 +34,8 @@ class AstronomicalObject:
             self._shape = Icosahedron()
         self._shape.set_size(self._size)
 
+    # Astronomical Object Updater
+
     # Static Methods
     # Vector Addition
     @staticmethod

@@ -12,6 +12,7 @@ from shapes import *
 def main():
 
     test = Star("Test", [0, 0, 1], 2, "icosahedron")
+    test2 = Star("Test2", [-2, -2, -2], 5, "icosahedron")
 
     pygame.init()
     display = (800, 600)
@@ -35,12 +36,13 @@ def main():
                 quit()
 
         # Rotate the cube by 1 degree around the (X=1, Y=1, Z=1) axis vector per frame
-        glRotatef(1, 1, 0, 1)
+        glRotatef(15, 1, 0, 1)
         
         # Clear the screen's color buffer and depth buffer before drawing the new frame
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         test.draw()
+        test2.draw()
         
         pygame.display.flip()
         clock.tick(60) # Limit the simulation to 60 FPS
