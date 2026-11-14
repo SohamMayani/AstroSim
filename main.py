@@ -11,11 +11,12 @@ from shapes import *
 
 def main():
 
-    test = Star("Test", [0, 0, 1], 2, "icosahedron")
-    test2 = Star("Test2", [-2, -2, -2], 5, "icosahedron")
+    test = Star("Test", [0, 0, 8], 0.2, "icosahedron")
+    test2 = Star("Test2", [-2, -2, -2], 3, "icosahedron")
+    test3 = Star("Test3", [-8, 2, 2], 1, "cube")
 
     pygame.init()
-    display = (800, 600)
+    display = (1600, 900)
     # Tell Pygame we are using OpenGL for this window
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
 
@@ -36,13 +37,14 @@ def main():
                 quit()
 
         # Rotate the cube by 1 degree around the (X=1, Y=1, Z=1) axis vector per frame
-        glRotatef(15, 1, 0, 1)
+        glRotatef(0.3, 1, 0, 1)
         
         # Clear the screen's color buffer and depth buffer before drawing the new frame
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         test.draw()
         test2.draw()
+        test3.draw()
         
         pygame.display.flip()
         clock.tick(60) # Limit the simulation to 60 FPS
