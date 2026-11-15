@@ -25,7 +25,7 @@ def main():
     gluPerspective(45, (display[0] / display[1]), 0.1, 250.0)
     
     # Move the camera back 5 units along the Z axis so we can see the cube
-    glTranslatef(0.0, 0.0, -44.0)
+    glTranslatef(0.0, 0.0, -24.0)
 
     clock = pygame.time.Clock()
 
