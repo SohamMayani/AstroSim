@@ -25,6 +25,7 @@ class AstronomicalObject:
         for i in range(0, len(self._shape.edges)):
             glVertex3fv(self.addVector(self._shape.edges[i], self._center))
         glEnd()
+        self.update()
 
     # Define the coordinates for the Astronomical Object
     def create_shape(self, shape):
@@ -34,7 +35,11 @@ class AstronomicalObject:
             self._shape = Icosahedron()
         self._shape.set_size(self._size)
 
-    # Astronomical Object Updater
+    # Update Astronomical Object
+    def update(self):
+        self._center = self.addVector(self._center, self._momentum)
+        self._momentum = self.addVector(self._momentum, self.scaleVector(self._center, -0.001))
+    # Astronomical Object Physics??? (Ignore this comment, unsure about implementing physics in this class, or creating another)
 
     # Static Methods
     # Vector Addition
@@ -45,6 +50,13 @@ class AstronomicalObject:
         v0 = []
         for i in range(0, len(v1)):
             v0.append(v1[i] + v2[i])
+        return v0
+
+    @staticmethod
+    def scaleVector(v1, scalar):
+        v0 = []
+        for i in range(0, len(v1)):
+            v0.append(scalar * v1[i])
         return v0
 
 

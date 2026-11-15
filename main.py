@@ -12,8 +12,8 @@ from shapes import *
 def main():
 
     test = Star("Test", [0, 0, 8], 0.2, "icosahedron")
-    test2 = Star("Test2", [-2, -2, -2], 3, "icosahedron")
-    test3 = Star("Test3", [-8, 2, 2], 1, "cube")
+    test2 = Star("Test2", [-2, -2, -2], 0.5, "icosahedron")
+    test3 = Star("Test3", [-8, 2, 2], 1, "cube", [0.1, 0, 0])
 
     pygame.init()
     display = (1600, 900)
@@ -22,10 +22,10 @@ def main():
 
     # Configure the 3D Perspective Camera
     # gluPerspective(Field of View, Aspect Ratio, Near Clipping Plane, Far Clipping Plane)
-    gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)
+    gluPerspective(45, (display[0] / display[1]), 0.1, 250.0)
     
     # Move the camera back 5 units along the Z axis so we can see the cube
-    glTranslatef(0.0, 0.0, -24.0)
+    glTranslatef(0.0, 0.0, -44.0)
 
     clock = pygame.time.Clock()
 
@@ -37,7 +37,7 @@ def main():
                 quit()
 
         # Rotate the cube by 1 degree around the (X=1, Y=1, Z=1) axis vector per frame
-        glRotatef(0.3, 1, 0, 1)
+        glRotatef(1, 1, 0, 1)
         
         # Clear the screen's color buffer and depth buffer before drawing the new frame
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
