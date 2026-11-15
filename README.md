@@ -3,7 +3,7 @@
 AstroSim is a work-in-progress 3D simulation of astronomical objects of different sizes, built with Python, pygame, and OpenGL. The goal is to watch several objects orbit one another in real time. This is a learning project: I started it to learn Python and to explore the physics of orbital motion, which connects to my interest in astronomy and optics.
 
 <!-- Add a screenshot of the current rendering here, and replace it with a GIF of the orbits once they work. -->
-![AstroSim preview](media/stationary_objects.png)
+![AstroSim preview](media/objects_pulled_to_origin.gif)
 
 ## Project Status
 
